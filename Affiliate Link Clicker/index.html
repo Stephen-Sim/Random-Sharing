@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <label for="urlInput">Enter URL:</label>
+    <input type="text" id="urlInput" name="url" placeholder="https://example.com">
+    <button id="executeButton">Submit</button>
+    <div id="log"></div>
+
+    <script>
+        document.getElementById('executeButton').addEventListener('click', async function () {
+            const logDiv = document.getElementById('log');
+            const url = document.getElementById('urlInput').value.trim();
+            logDiv.innerHTML = '';
+            logDiv.innerHTML += 'Execution started...<br>';
+
+            for (let i = 0; i < 1000; i++) {
+                await delay(100);
+
+                try {
+                    const response = await fetch(url, { mode: 'no-cors' });
+                    logDiv.innerHTML += 'Times Clicked: ' + (i + 1) + '<br>';
+                } catch (error) {
+                    console.error('Error:', error);
+                    logDiv.innerHTML += 'Error occurred: ' + error.message + '<br>';
+                }
+            }
+
+            logDiv.innerHTML += 'Done';
+        });
+
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+    </script>
+</body>
+
+</html>
